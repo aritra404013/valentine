@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Sacramento&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            // Public Key
+            emailjs.init("vVs9oaktnDrMC70eb");
+        })();
+    </script>
+    <style>
+        :root {
+            --primary-color: #ff4d6d;
+            --secondary-color: #ff8fa3;
+            --bg-color: #fff0f3;
+            --text-color: #590d22;
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            font-family: 'Nunito', sans-serif;
+            overflow: hidden;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* 10. Gradient Animation */
+            background: linear-gradient(-45deg, #fff0f3, #ffe3e8, #ffc2d1, #fff0f3);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            /* 10. Heart Cursor */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewport="0 0 24 24" fill="%23ff4d6d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Shake Animation */
+        @keyframes shake {
+            0% {
+                transform: translate(1px, 1px) rotate(0deg);
+            }
+
+            10% {
+                transform: translate(-1px, -2px) rotate(-1deg);
+            }
+
+            20% {
+                transform: translate(-3px, 0px) rotate(1deg);
+            }
+
+            30% {
+                transform: translate(3px, 2px) rotate(0deg);
+            }
+
+            40% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(-1px, 2px) rotate(-1deg);
+            }
+
+            60% {
+                transform: translate(-3px, 1px) rotate(0deg);
+            }
+
+            70% {
+                transform: translate(3px, 1px) rotate(-1deg);
+            }
+
+            80% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+
+            90% {
+                transform: translate(1px, 2px) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(1px, -2px) rotate(-1deg);
+            }
+        }
+
+        .shake-element {
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
+        }
+
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            background-color: var(--secondary-color);
+            display: inline-block;
+            height: 30px;
+            width: 30px;
+            margin: 0 10px;
+            transform: rotate(-45deg);
+            animation: float 6s ease-in infinite;
+            opacity: 0.6;
+        }
+
+        .heart::after,
+        .heart::before {
+            content: "";
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            height: 30px;
+            position: absolute;
+            width: 30px;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 15px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(-45deg) scale(0.8);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-120vh) rotate(-45deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Container Styles */
+        .container {
+            text-align: center;
+            z-index: 10;
+            transition: all 0.5s ease;
+            max-width: 90%;
+            width: 400px;
+        }
+
+        h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.2;
+        }
+
+        .gif-container img {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 15px;
+            font-size: 1.2rem;
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            width: 80%;
+            margin-bottom: 20px;
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(255, 77, 109, 0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+        }
+
+        .btn-yes {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.05);
+            background-color: #ff2a51;
+        }
+
+        .btn-no {
+            background-color: #e9ecef;
+            color: var(--text-color);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Questionnaire */
+        .question-card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border: 2px solid white;
+        }
+
+        .progress-text {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background-color: white;
+            border: 2px solid var(--secondary-color);
+            color: var(--text-color);
+            padding: 12px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 2. Typing Reveal Section */
+        .typing-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            font-family: 'Sacramento', cursive;
+            font-size: 2rem;
+            color: var(--primary-color);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Ticket */
+        .ticket {
+            background: white;
+            width: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border: 2px dashed var(--primary-color);
+            position: relative;
+            background-image: radial-gradient(circle at top left, transparent 20px, white 21px),
+                radial-gradient(circle at top right, transparent 20px, white 21px),
+                radial-gradient(circle at bottom left, transparent 20px, white 21px),
+                radial-gradient(circle at bottom right, transparent 20px, white 21px);
+            animation: popUp 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes popUp {
+            from {
+                transform: scale(0.8) translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .ticket-header h2 {
+            margin: 0;
+            color: var(--primary-color);
+            font-family: 'Sacramento', cursive;
+            font-size: 2.8rem;
+            border-bottom: 2px dashed #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ticket-body p {
+            margin: 12px 0;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .barcode {
+            height: 40px;
+            margin-top: 25px;
+            opacity: 0.6;
+            cursor: pointer;
+            background: repeating-linear-gradient(90deg, #333 0, #333 2px, transparent 2px, transparent 4px);
+        }
+
+        /* 5. Countdown */
+        .countdown {
+            margin-top: 20px;
+            padding: 10px;
+            background: var(--bg-color);
+            border-radius: 10px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* 3. Audio Player */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 100;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .audio-control:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .ticket {
+                padding: 20px;
+            }
+
+            .ticket-header h2 {
+                font-size: 2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating Hearts -->
+    <div class="hearts-bg" id="hearts-container"></div>
+
+    <!-- Audio Player -->
+    <div class="audio-control" onclick="toggleAudio()">
+        <span id="audio-icon">🎵</span>
+    </div>
+    <!-- Hidden Audio Element -->
+    <audio id="bg-music" loop>
+        <!-- Place your audio URL here. Using a generic romantic placeholder -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 0. Name Section -->
+    <div class="container" id="name-container">
+        <h1>Hi cutie!</h1>
+        <p style="font-size: 1.2rem; color: var(--text-color); margin-bottom: 20px;">What's your beautiful name?</p>
+        <input type="text" id="user-name" placeholder="Enter your name..." autocomplete="off">
+        <br>
+        <button class="btn-yes" onclick="submitName()">Continue 💖</button>
+    </div>
+
+    <!-- 1. Initial Question Section -->
+    <div class="container hidden" id="main-container">
+        <div class="gif-container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExemF3eGN2YnFneG5pbm9ranVvN2gzeHZpeG43eHN4aXVjbWc2cjV5eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/ek3jvj7IdlLkfIaA8M/giphy.gif"
+                alt="Cute Cat Asking">
+        </div>
+        <h1 id="main-question">Will you be my Valentine?</h1>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="startQuestionnaire()">YES!</button>
+            <button class="btn-no" id="no-btn">No</button>
+        </div>
+    </div>
+
+    <!-- 2. Questionnaire Section -->
+    <div class="container hidden" id="quiz-container">
+        <div class="question-card">
+            <div class="progress-text" id="progress-text">DAY 1 OF 7</div>
+            <div class="question-text" id="question-text">Loading question...</div>
+            <div class="options-group" id="options-container"></div>
+        </div>
+    </div>
+
+    <!-- 2b. Why I Like You / Confession Section -->
+    <div class="container hidden" id="typing-container">
+        <div class="typing-container">
+            <span id="typing-text"></span><span class="cursor-blink">|</span>
+        </div>
+    </div>
+
+    <!-- 3. Final Ticket Section -->
+    <div class="container hidden" id="ticket-container">
+        <div class="ticket">
+            <div class="ticket-header">
+                <h2>It's a Date!</h2>
+            </div>
+            <div class="ticket-body">
+                <p><strong>Passenger:</strong> <span id="ticket-name">You!</span></p>
+                <p><strong>Date:</strong> Feb 14th</p>
+                <p><strong>Mission:</strong> <span id="mission-text">Be Mine</span></p>
+            </div>
+
+            <!-- Countdown -->
+            <div class="countdown" id="countdown-box">
+                Loading countdown...
+            </div>
+
+            <div style="margin-top: 20px; color: var(--secondary-color); font-weight: bold;">
+                See you soon! 💖
+            </div>
+
+            <div id="email-status" style="margin-top: 10px; font-size: 0.8rem; color: #888;"></div>
+
+            <div class="rsvp-btn" style="margin-top: 20px;">
+                <a id="email-link" href="#" class="btn-yes"
+                    style="text-decoration: none; font-size: 1rem; padding: 10px 20px;">Manual RSVP 💌</a>
+            </div>
+
+            <!-- 7. Easter Egg Barcode -->
+            <div class="barcode" id="barcode" onclick="unlockEasterEgg()"></div>
+        </div>
+    </div>
+
+    <!-- Secret Ending Container -->
+    <div class="container hidden" id="secret-container">
+        <h1>You Unlocked the Bonus! 🍕🎬</h1>
+        <p>After our date, we're having a movie marathon!</p>
+        <button class="btn-yes" onclick="location.reload()">Yay!</button>
+    </div>
+
+    <script>
+        // --- State ---
+        let userName = "";
+        let userAnswers = [];
+        let currentQIndex = 0;
+        let barcodeClicks = 0;
+        let noBtnHoverCount = 0;
+
+        // --- Configuration ---
+        const questions = [
+            { day: "Rose Day", question: "If our love was a rose, what color?", options: ["Red", "Pink", "White"] },
+            { day: "Propose Day", question: "Ideal proposal spot?", options: ["Beach", "Mountain", "Home"] }, // Added simple keywords for Memory Lane
+            { day: "Chocolate Day", question: "Fav Chocolate?", options: ["Dark", "Milk", "White"] },
+            { day: "Teddy Day", question: "Cuddle level?", options: ["10", "100", "Infinite"] },
+            { day: "Promise Day", question: "Promise me?", options: ["Always stay", "Love forever", "Buy snacks"] },
+            { day: "Hug Day", question: "Hug duration?", options: ["5 sec", "1 min", "Forever"] },
+            { day: "Kiss Day", question: "Best kiss spot?", options: ["Forehead", "Cheek", "Lips"] }
+        ];
+
+        // --- Elements ---
+        const nameContainer = document.getElementById('name-container');
+        const mainContainer = document.getElementById('main-container');
+        const quizContainer = document.getElementById('quiz-container');
+        const typingContainer = document.getElementById('typing-container');
+        const ticketContainer = document.getElementById('ticket-container');
+        const secretContainer = document.getElementById('secret-container');
+
+        // --- 0. Name Handling ---
+        function submitName() {
+            const input = document.getElementById('user-name');
+            if (input.value.trim()) {
+                userName = input.value.trim();
+                nameContainer.classList.add('hidden');
+                mainContainer.classList.remove('hidden');
+                document.getElementById('main-question').innerText = `Will you be my Valentine, ${userName}?`;
+            }
+        }
+
+        // --- 1. Start Flow ---
+        function startQuestionnaire() {
+            mainContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // --- 2. Load Question ---
+        function loadQuestion() {
+            const data = questions[currentQIndex];
+            document.getElementById('progress-text').innerText = `DAY ${currentQIndex + 1}`;
+            document.getElementById('question-text').innerText = data.question;
+            const opts = document.getElementById('options-container');
+            opts.innerHTML = '';
+
+            data.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => handleAnswer(data.day, data.question, opt);
+                opts.appendChild(btn);
+            });
+        }
+
+        // --- 3. Handle Answer + Memory Lane Logic ---
+        function handleAnswer(day, q, ans) {
+            userAnswers.push({ day, q, ans });
+
+            // 1. Memory Lane: Dynamic Background/Toast
+            if (ans.includes("Beach")) {
+                document.body.style.background = "linear-gradient(to right, #f8b500, #fceabb)"; // Sunset
+                showToast("Sunset vibes... 🌅");
+            } else if (ans.includes("Mountain")) {
+                document.body.style.background = "linear-gradient(to right, #a1c4fd, #c2e9fb)"; // Mountain
+                showToast("Cozy mountain air... 🏔️");
+            } else if (ans.includes("Home")) {
+                document.body.style.background = "linear-gradient(to right, #ff9a9e, #fecfef)"; // Cozy
+                showToast("Home is best... 🏡");
+            }
+
+            if (currentQIndex < questions.length - 1) {
+                currentQIndex++;
+                loadQuestion();
+            } else {
+                startTypingReveal();
+            }
+        }
+
+        // --- 3b. Typing Reveal (Why I Like You) ---
+        function startTypingReveal() {
+            quizContainer.classList.add('hidden');
+            typingContainer.classList.remove('hidden');
+
+            const lines = [
+                `Before the ticket...`,
+                `I have a confession.`,
+                `You are the best thing...`,
+                `That ever happened to me. ❤️`
+            ];
+
+            let lineIndex = 0;
+            let charIndex = 0;
+            const typeElem = document.getElementById('typing-text');
+
+            function type() {
+                if (lineIndex < lines.length) {
+                    if (charIndex < lines[lineIndex].length) {
+                        typeElem.innerText += lines[lineIndex].charAt(charIndex);
+                        charIndex++;
+                        setTimeout(type, 50); // Typing speed
+                    } else {
+                        setTimeout(() => {
+                            typeElem.innerText = "";
+                            charIndex = 0;
+                            lineIndex++;
+                            type();
+                        }, 1500); // Wait before next line
+                    }
+                } else {
+                    finishJourney();
+                }
+            }
+            type();
+        }
+
+        // --- 4. Finish ---
+        function finishJourney() {
+            typingContainer.classList.add('hidden');
+            ticketContainer.classList.remove('hidden');
+
+            // Populate Ticket
+            document.getElementById('ticket-name').innerText = userName;
+            startCountdown();
+            sendEmailAuto();
+            triggerConfetti();
+
+            // 9. After Date Mode check
+            const today = new Date();
+            const valDay = new Date(today.getFullYear(), 1, 15); // Feb 15
+            if (today > valDay) {
+                document.getElementById('mission-text').innerText = "Mission Accomplished! 💋";
+                document.getElementById('countdown-box').innerText = "Hope you had a great time!";
+            }
+        }
+
+        // --- 5. Countdown ---
+        function startCountdown() {
+            const targetDate = new Date("February 14, 2026 00:00:00").getTime(); // Adjust year!
+
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = targetDate - now;
+
+                if (diff < 0) {
+                    document.getElementById('countdown-box').innerText = "IT'S TODAY! 💖";
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById('countdown-box').innerText =
+                    `${days}d ${hours}h ${minutes}m until our date! ⏳`;
+            }, 1000);
+        }
+
+        // --- Email Logic ---
+        function sendEmailAuto() {
+            const emailStatus = document.getElementById('email-status');
+            emailStatus.innerText = "Sending answers... ☁️";
+
+            const serviceID = "service_jck969a";
+            const templateID = "template_9kok4nk";
+
+            let answersText = userAnswers.map(a => `${a.day}: ${a.ans}`).join("\n");
+
+            emailjs.send(serviceID, templateID, {
+                name: userName,
+                message: answersText
+            }).then(() => emailStatus.innerText = "Sent! 💌",
+                () => emailStatus.innerText = "Manual send needed 👇");
+
+            // Manual Link
+            const subject = encodeURIComponent(`Date Confirmation: ${userName}`);
+            document.getElementById('email-link').href = `mailto:?subject=${subject}&body=${encodeURIComponent(answersText)}`;
+        }
+
+        // --- 7. Barcode Easter Egg ---
+        function unlockEasterEgg() {
+            barcodeClicks++;
+            if (barcodeClicks === 5) {
+                alert("Barcode Scanned... Secret Unlocked! 🔓");
+                ticketContainer.classList.add('hidden');
+                secretContainer.classList.remove('hidden');
+                triggerConfetti();
+            }
+        }
+
+        // --- 4. Evil No Button ---
+        const noBtn = document.getElementById('no-btn');
+
+        function moveNoButton() {
+            noBtnHoverCount++;
+
+            // Move within viewport logic
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+
+            // Calculate available space
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+
+            // Apply fixed position to ensure it jumps anywhere on screen
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            noBtn.style.transform = 'none'; // Clear translate
+
+            // Shrink & Text
+            if (noBtnHoverCount > 2) {
+                noBtn.style.transform = `scale(0.8)`;
+                noBtn.innerText = "Really? 🥺";
+            }
+            if (noBtnHoverCount > 5) {
+                noBtn.style.transform = `scale(0.6)`;
+                noBtn.innerText = "Think again!";
+            }
+        }
+
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Stop click from happening
+            moveNoButton();
+        });
+
+        noBtn.addEventListener('click', () => {
+            document.body.classList.add('shake-element');
+            setTimeout(() => document.body.classList.remove('shake-element'), 500);
+            alert("⚠️ SYSTEM ERROR: 'No' is not an option! Try again.");
+        });
+
+        // --- Audio ---
+        function toggleAudio() {
+            const audio = document.getElementById('bg-music');
+            const icon = document.getElementById('audio-icon');
+            if (audio.paused) {
+                audio.play();
+                icon.innerText = "⏸️";
+            } else {
+                audio.pause();
+                icon.innerText = "🎵";
+            }
+        }
+
+        // --- Toast Utility ---
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.innerText = msg;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '100px';
+            toast.style.background = 'rgba(0,0,0,0.7)';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 20px';
+            toast.style.borderRadius = '20px';
+            toast.style.zIndex = '1000';
+            toast.style.animation = 'popUp 0.5s';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        // Confetti
+        function triggerConfetti() {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+
+        // Hearts
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.getElementById('hearts-container').appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }, 300);
+
+    </script>
+</body>
+
+</html>
